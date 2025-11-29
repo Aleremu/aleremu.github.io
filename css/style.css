@@ -1,20 +1,27 @@
+/* =========================================
+   1. Base Styles & Reset
+   ========================================= */
 body {
-    text-align: center;
-    padding: 0;
-    border: 0;
     margin: 0;
-    background-color: #181818; /* Dark background for professional look */
+    padding: 0;
+    background-color: #181818;
     font-family: "Pixelify Sans", sans-serif;
-    /* Fix for blurry pixel font */
     -webkit-font-smoothing: none;
     -moz-osx-font-smoothing: grayscale;
     text-rendering: optimizeSpeed;
     color: #ffffff;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 100vh;
-    overflow: hidden; /* Prevent scrollbars if canvas fits exactly */
+    overflow: hidden; /* Prevent scrollbars on body */
+    height: 100vh;
+    width: 100vw;
+}
+
+#unity-canvas {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: -1;
+    background: #181818;
 }
 
 #unity-canvas {
@@ -32,163 +39,9 @@ body {
     }
 }
 
-.social-icons {
-    position: absolute;
-    top: 20px;
-    right: 20px;
-    display: flex;
-    gap: 20px;
-    z-index: 100;
-}
-
-.social-icon {
-    color: #ffffff;
-    font-size: 24px;
-    text-decoration: none;
-    transition: transform 0.2s ease, color 0.2s ease;
-}
-
-.social-icon:hover {
-    color: #dddddd;
-    transform: scale(1.1);
-}
-
-.clock {
-    position: absolute;
-    top: 20px;
-    left: 40px;
-    color: #ffffff;
-    font-size: 6vw; /* Responsive font size based on viewport width */
-    z-index: 100;
-    user-select: none;
-    line-height: 1;
-    text-shadow: 2px 2px 0px #000000; /* Better visibility against backgrounds */
-}
-
-.projects-container {
-    position: absolute;
-    top: 20vh; /* Position relative to viewport height */
-    left: 40px;
-    z-index: 100;
-    text-align: left;
-    max-width: 200px;
-}
-
-.projects-container h3 {
-    font-size: 24px;
-    margin-bottom: 15px;
-    text-transform: uppercase;
-    letter-spacing: 2px;
-    border-bottom: 2px solid #fff;
-    display: inline-block;
-    padding-bottom: 5px;
-    text-shadow: 2px 2px 0px #000000;
-}
-
-.project-list {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-}
-
-.project-list li {
-    margin-bottom: 10px;
-}
-
-.project-list a {
-    color: #cccccc;
-    text-decoration: none;
-    font-size: 18px;
-    transition: color 0.2s, padding-left 0.2s;
-    display: block;
-    text-shadow: 1px 1px 0px #000000;
-}
-
-.project-list a:hover {
-    color: #ffffff;
-    padding-left: 5px;
-}
-
-.wip-container {
-    position: absolute;
-    bottom: 20px;
-    right: 20px;
-    z-index: 100;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    font-size: 14px;
-    color: #aaaaaa;
-    background: rgba(0, 0, 0, 0.5);
-    padding: 8px 12px;
-    border-radius: 4px;
-    pointer-events: none; /* Let clicks pass through if needed, though it's in the corner */
-}
-
-.wip-container i {
-    color: #f0ad4e; /* Warning orange */
-}
-
-/* Responsive Adjustments */
-@media (min-width: 1200px) {
-    .clock {
-        font-size: 80px; /* Cap the size on large screens */
-        top: 30px;
-        left: 50px;
-    }
-    .projects-container {
-        top: 180px;
-        left: 50px;
-    }
-}
-
-@media (max-width: 768px) {
-    .clock {
-        font-size: 40px;
-        top: 15px;
-        left: 20px;
-    }
-
-    .projects-container {
-        top: 80px;
-        left: 20px;
-    }
-
-    .projects-container h3 {
-        font-size: 18px;
-    }
-
-    .project-list a {
-        font-size: 16px;
-    }
-
-    .social-icons {
-        top: 15px;
-        right: 15px;
-    }
-    
-    .social-icon {
-        font-size: 20px;
-    }
-
-    .wip-container {
-        bottom: 10px;
-        right: 10px;
-        font-size: 12px;
-        padding: 5px 8px;
-    }
-}
-
-@media (max-width: 480px) {
-    .clock {
-        font-size: 32px;
-    }
-    
-    .projects-container {
-        top: 70px;
-    }
-}
-
+/* =========================================
+   2. Loading Screen
+   ========================================= */
 #loading-screen {
     position: fixed;
     top: 0;
@@ -232,7 +85,7 @@ body {
     content: '';
     animation: dots 1.5s steps(4, end) infinite;
     display: inline-block;
-    width: 24px; /* Approximate width of 3 dots */
+    width: 24px;
     text-align: left;
 }
 
@@ -243,33 +96,55 @@ body {
     80%, 100% { content: '...'; }
 }
 
-/* Project Overlay */
-.project-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: 50; /* Above Unity (0), below UI (100) */
+/* =========================================
+   3. Fixed UI Elements
+   ========================================= */
+.social-icons {
+    position: absolute;
+    top: 20px;
+    right: 20px;
     display: flex;
-    justify-content: flex-start; /* Align left */
-    align-items: flex-start;
-    opacity: 1;
-    transition: opacity 0.3s ease;
-    padding-left: 300px; /* Space for sidebar */
-    padding-top: 192px;
-    padding-right: 40px;
-    padding-bottom: 40px;
-    box-sizing: border-box;
+    gap: 20px;
+    z-index: 100;
 }
 
-.project-overlay.hidden {
-    opacity: 0;
+.social-icon {
+    color: #ffffff;
+    font-size: 24px;
+    text-decoration: none;
+    transition: transform 0.2s ease, color 0.2s ease;
+}
+
+.social-icon:hover {
+    color: #dddddd;
+    transform: scale(1.1);
+}
+
+.wip-container {
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 14px;
+    color: #aaaaaa;
+    background: rgba(0, 0, 0, 0.5);
+    padding: 8px 12px;
+    border-radius: 4px;
     pointer-events: none;
 }
 
-.overlay-backdrop {
-    position: absolute;
+.wip-container i {
+    color: #f0ad4e;
+}
+
+/* =========================================
+   4. Main Layout
+   ========================================= */
+.global-backdrop {
+    position: fixed;
     top: 0;
     left: 0;
     width: 100%;
@@ -277,40 +152,145 @@ body {
     background-color: rgba(0, 0, 0, 0.7);
     backdrop-filter: blur(8px);
     -webkit-backdrop-filter: blur(8px);
-    z-index: -1;
+    z-index: 5;
+    opacity: 1;
+    transition: opacity 0.3s ease;
+    pointer-events: none; /* Allow clicks to pass through if needed, or block if desired */
 }
 
-.overlay-content-wrapper {
-    position: relative;
+.global-backdrop.hidden {
+    opacity: 0;
+}
+
+#main-layout {
+    display: flex;
     width: 100%;
-    max-width: 100%;
+    height: 100%;
+    position: relative;
+    z-index: 10;
+    pointer-events: none; /* Let clicks pass through to canvas where not interacting */
+}
+
+/* Sidebar (Left Column) */
+.sidebar {
+    flex: 0 0 300px; /* Fixed width or percentage */
+    display: flex;
+    flex-direction: column;
+    min-width: 315px;
+    padding: 40px;
+    box-sizing: border-box;
+    pointer-events: auto;
+    /* justify-content: center; */ /* Align vertically center? User said "clock and below projects" */
+    padding-top: 100px; /* Space from top */
+}
+
+.clock {
+    font-size: 60px;
+    margin-bottom: 40px;
+    line-height: 1;
+    text-shadow: 2px 2px 0px #000000;
+}
+
+.projects-container {
+    text-align: left;
+}
+
+.projects-container h3 {
+    font-size: 24px;
+    margin-bottom: 15px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    border-bottom: 2px solid #fff;
+    display: inline-block;
+    padding-bottom: 5px;
+    text-shadow: 2px 2px 0px #000000;
+}
+
+.project-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.project-list li {
+    margin-bottom: 10px;
+}
+
+.project-list a {
+    color: #cccccc;
+    text-decoration: none;
+    font-size: 18px;
+    transition: color 0.2s, padding-left 0.2s;
+    display: block;
+    text-shadow: 1px 1px 0px #000000;
+}
+
+.project-list a:hover {
+    color: #ffffff;
+    padding-left: 5px;
+}
+
+.project-list a.active {
+    color: #ffffff;
+    padding-left: 5px;
+}
+
+/* Content Area (Right Column) */
+.content-area {
+    flex: 1;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /* padding: 40px; */
+    box-sizing: border-box;
+    pointer-events: none; /* Initially hidden/none */
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.content-area:not(.hidden) {
+    pointer-events: auto;
+    opacity: 1;
+}
+
+/* Removed .content-backdrop as it is replaced by .global-backdrop */
+
+.project-content {
+    position: relative;
+    z-index: 1;
+    width: 100%;
     height: 100%;
     overflow-y: auto;
-    /* Removed background and border to blend in */
-    color: #fff;
-    text-align: left;
+    padding: 40px;
+    box-sizing: border-box;
     /* Custom Scrollbar */
     scrollbar-width: thin;
     scrollbar-color: #555 #222;
-    padding-right: 20px; /* Space for scrollbar */
+    overflow-y: visible;
+    overflow: scroll;
 }
 
-.overlay-content-wrapper::-webkit-scrollbar {
+.project-content::-webkit-scrollbar {
     width: 8px;
 }
 
-.overlay-content-wrapper::-webkit-scrollbar-track {
-    background: #222;
+.project-content::-webkit-scrollbar-track {
+    background: transparent;
 }
 
-.overlay-content-wrapper::-webkit-scrollbar-thumb {
+.project-content::-webkit-scrollbar-thumb {
     background-color: #555;
     border-radius: 4px;
 }
 
-/* Project Detail Styles */
+/* =========================================
+   5. Project Details Styling
+   ========================================= */
 .project-detail {
-    font-family: "Pixelify Sans", sans-serif;
+    max-width: 800px;
+    margin: 0 auto;
+    padding-top: 60px;
 }
 
 .project-header {
@@ -322,12 +302,6 @@ body {
     padding-bottom: 20px;
 }
 
-.project-icon {
-    width: 50px;
-    height: 50px;
-    object-fit: contain;
-}
-
 .project-header h2 {
     font-size: 36px;
     margin: 0;
@@ -335,12 +309,8 @@ body {
     letter-spacing: 2px;
 }
 
-/* Ported Styles from v1 */
 .content-block {
-    margin-bottom: 80px;
-    position: relative;
-    /* Clearfix */
-    overflow: visible; 
+    margin-bottom: 60px;
 }
 
 .content-block::after {
@@ -362,22 +332,21 @@ body {
 }
 
 .left {
-    float: left !important;
-    margin-right: 30px !important;
-    margin-left: 0px !important;
+    float: left;
+    margin-right: 30px;
+    margin-bottom: 20px;
 }
 
 .right {
-    float: right !important;
-    margin-left: 30px !important;
-    margin-right: 0px !important;
+    float: right;
+    margin-left: 30px;
+    margin-bottom: 20px;
 }
 
 .project-detail p {
     font-size: 18px;
     line-height: 1.6;
     color: #ddd;
-    /* Ensure text wraps around floated image */
 }
 
 .project-detail a {
@@ -391,7 +360,37 @@ body {
     border-bottom-style: solid;
 }
 
-/* Spheres Decoration */
+.youtube-video {
+    margin-bottom: 40px;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+}
+
+.gallery {
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.gallery img {
+    border-radius: 10px;
+    max-height: 150px;
+    transition: transform 0.2s;
+    cursor: pointer;
+}
+
+.gallery img:hover {
+    transform: scale(1.05);
+    z-index: 10;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.5);
+}
+
+/* =========================================
+   6. Decorations (Spheres) - Kept from original
+   ========================================= */
 .ar-section-01 {
     position: relative;
     min-height: 230px;
@@ -407,26 +406,6 @@ body {
     width: 112px;
     animation: ball 3s ease-in-out infinite;
     animation-delay: -5.5s;
-}
-
-@keyframes ball {
-    0% { transform: translateY(0); filter: invert(0); }
-    40% { filter: invert(0); }
-    45% { filter: invert(1); }
-    55% { transform: translateY(-20px); filter: invert(1); }
-    90% { filter: invert(1); }
-    95% { filter: invert(0); }
-    100% { transform: translateY(0); filter: invert(0); }
-}
-
-@keyframes ball02 {
-    0% { transform: translateY(0) rotate(45deg); filter: invert(0); }
-    40% { filter: invert(0); }
-    45% { filter: invert(1); }
-    55% { transform: translateY(-20px); filter: invert(1); }
-    90% { filter: invert(1); }
-    95% { filter: invert(0); }
-    100% { transform: translateY(0) rotate(45deg); filter: invert(0); }
 }
 
 .ar-section-01 .sphere-left-02 {
@@ -468,75 +447,124 @@ body {
     transform: rotate(35deg);
 }
 
-.youtube-video {
-    margin-bottom: 40px;
-    border-radius: 8px;
-    overflow: hidden;
-    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+@keyframes ball {
+    0% { transform: translateY(0); filter: invert(0); }
+    40% { filter: invert(0); }
+    45% { filter: invert(1); }
+    55% { transform: translateY(-20px); filter: invert(1); }
+    90% { filter: invert(1); }
+    95% { filter: invert(0); }
+    100% { transform: translateY(0); filter: invert(0); }
 }
 
-.gallery {
-    display: flex;
-    flex-direction: row;
-    gap: 20px;
-    justify-content: space-around;
-    flex-wrap: wrap;
+@keyframes ball02 {
+    0% { transform: translateY(0) rotate(45deg); filter: invert(0); }
+    40% { filter: invert(0); }
+    45% { filter: invert(1); }
+    55% { transform: translateY(-20px); filter: invert(1); }
+    90% { filter: invert(1); }
+    95% { filter: invert(0); }
+    100% { transform: translateY(0) rotate(45deg); filter: invert(0); }
 }
 
-.gallery img {
-    border-radius: 10px;
-    max-height: 200px; /* Adjusted for better fit */
-    transition: transform 0.2s;
-    cursor: pointer;
-}
+/* =========================================
+   7. Responsive Design
+   ========================================= */
 
-.gallery img:hover {
-    transform: scale(1.05);
-    z-index: 10;
-    box-shadow: 0 5px 15px rgba(0,0,0,0.5);
-}
-
-/* Responsive Overlay */
+/* Tablet / Mobile (max-width: 960px) */
 @media (max-width: 960px) {
-    .project-overlay {
-        padding-left: 20px;
-        padding-right: 20px;
-        justify-content: center;
+    #main-layout {
+        flex-direction: column;
+        overflow-y: auto; /* Enable scrolling */
+        pointer-events: auto; /* Allow interaction */
+        -webkit-overflow-scrolling: touch;
+    }
+
+    .sidebar {
+        flex: 0 0 auto;
+        width: 100%;
+        padding: 20px;
+        padding-top: 80px; /* Space for social icons */
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: center;
+        background: linear-gradient(to bottom, rgba(0,0,0,0.8), transparent);
+        text-align: center;
+    }
+
+    .clock {
+        font-size: 60px;
+        margin-bottom: 20px;
+    }
+
+    .projects-container {
+        text-align: center;
+        width: 100%;
     }
     
-    .overlay-content-wrapper {
-        width: 100%;
-        max-width: 600px;
+    .projects-container h3 {
+        display: inline-block;
+        margin-bottom: 15px;
+    }
+
+    .project-list {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        justify-content: flex-start;
+        padding-left: 20px;
+    }
+
+    .content-area {
+        /* padding: 10px; */
+        overflow: visible;
+        height: auto;
+        display: block;
+    }
+
+    .content-area.hidden {
+        display: none;
+    }
+
+    /* Removed .content-backdrop override */
+
+    .project-content {
+        padding: 20px;
+        overflow: visible;
+        height: auto;
     }
 
     .content-image {
-        float: none !important;
-        margin: 0 auto 20px auto !important;
+        float: none;
+        margin: 0 auto 20px auto;
         display: block;
-        max-width: 200px;
-    }
-    
-    .project-detail p {
-        text-align: center;
     }
 
     .ar-section-01 .sphere-bottom-01,
     .ar-section-01 .sphere-bottom-02 {
-        display: none; /* Hide complex decorations on mobile */
+        display: none;
     }
 }
 
-@media (max-width: 768px) {
-    .project-header h2 {
-        font-size: 24px;
+/* Small Mobile (max-width: 600px) */
+@media (max-width: 600px) {
+    .sidebar {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        padding-top: 60px;
+    }
+
+    .projects-container {
+        text-align: center;
+        margin-top: 20px;
+    }
+
+    .project-list {
+        justify-content: center;
     }
     
-    .project-icon {
-        width: 32px;
-        height: 32px;
-    }
-    
-    .project-detail p {
-        font-size: 16px;
+    .clock {
+        font-size: 32px;
     }
 }

@@ -55,46 +55,59 @@ document.addEventListener("DOMContentLoaded", function() {
         alert(message);
     });
 
-    // Project Overlay Logic
-    const overlay = document.getElementById('project-overlay');
-    const overlayBody = document.getElementById('overlay-body');
-    const backdrop = document.querySelector('.overlay-backdrop');
+    // Project Content Logic
+    const contentArea = document.getElementById('content-area');
+    const projectContent = document.getElementById('project-content');
+    const globalBackdrop = document.getElementById('global-backdrop');
     const projectLinks = document.querySelectorAll('a[data-project]');
 
-    function openOverlay(projectId) {
+    function openProject(projectId) {
         const contentTemplate = document.getElementById('content-' + projectId);
         if (contentTemplate) {
-            overlayBody.innerHTML = contentTemplate.innerHTML;
-            overlay.classList.remove('hidden');
+            projectContent.innerHTML = contentTemplate.innerHTML;
+            contentArea.classList.remove('hidden');
+            if (globalBackdrop) globalBackdrop.classList.remove('hidden');
+            // Initialize lightbox if needed (it usually auto-inits on DOM change or click)
         } else {
             console.error('Content not found for project:', projectId);
         }
     }
 
-    function closeOverlay() {
-        overlay.classList.add('hidden');
-        // Optional: Clear content after transition to stop videos etc.
+    function closeProject() {
+        contentArea.classList.add('hidden');
+        if (globalBackdrop) globalBackdrop.classList.add('hidden');
         setTimeout(() => {
-            overlayBody.innerHTML = '';
+            projectContent.innerHTML = '';
         }, 300);
+        
+        // Remove active class from all links
+        projectLinks.forEach(l => l.classList.remove('active'));
     }
 
     projectLinks.forEach(link => {
         link.addEventListener('click', function(e) {
             e.preventDefault();
             const projectId = this.getAttribute('data-project');
-            openOverlay(projectId);
+            
+            if (this.classList.contains('active')) {
+                // If already active, close it
+                closeProject();
+                this.blur();
+            } else {
+                // If not active, open it
+                // Remove active from all others
+                projectLinks.forEach(l => l.classList.remove('active'));
+                // Add active to this one
+                this.classList.add('active');
+                openProject(projectId);
+            }
         });
     });
 
-    if (backdrop) {
-        backdrop.addEventListener('click', closeOverlay);
-    }
-
     // Close on Escape key
     document.addEventListener('keydown', function(e) {
-        if (e.key === 'Escape' && !overlay.classList.contains('hidden')) {
-            closeOverlay();
+        if (e.key === 'Escape' && !contentArea.classList.contains('hidden')) {
+            closeProject();
         }
     });
 });

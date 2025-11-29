@@ -18,25 +18,44 @@
     <link rel="stylesheet" href="css/style.css">
   </head>
   <body>
-    <div id="clock" class="clock">00:00:00</div>
-    
-    <div class="projects-container">
-        <h3>My Projects</h3>
-        <ul class="project-list">
-            <li><a href="#" data-project="tabakalera">Tabakalera</a></li>
-            <li><a href="#" target="_blank">Project Beta</a></li>
-            <li><a href="#" target="_blank">Project Gamma</a></li>
-        </ul>
+    <canvas id="unity-canvas" width=960 height=600 tabindex="-1"></canvas>
+
+    <div id="loading-screen">
+        <div class="spinner"></div>
+        <p class="loading-text">Loading</p>
     </div>
 
-    <div id="project-overlay" class="project-overlay hidden">
-        <div class="overlay-backdrop"></div>
-        <div class="overlay-content-wrapper">
-            <div id="overlay-body">
+    <div class="wip-container">
+        <i class="fas fa-triangle-exclamation"></i>
+        <span>Portfolio Work in Progress</span>
+    </div>
+
+    <div class="social-icons">
+        <a href="https://www.linkedin.com/in/alejandroreymunoz" target="_blank" class="social-icon"><i class="fab fa-linkedin"></i></a>
+        <a href="https://twitter.com/aleremu" target="_blank" class="social-icon"><i class="fab fa-x-twitter"></i></a>
+    </div>
+
+    <div id="global-backdrop" class="global-backdrop hidden"></div>
+
+    <main id="main-layout">
+        <aside class="sidebar">
+            <div id="clock" class="clock">00:00:00</div>
+            
+            <div class="projects-container">
+                <h3>My Projects</h3>
+                <ul class="project-list">
+                    <li><a href="#" data-project="tabakalera">Tabakalera</a></li>
+                    <li><a href="#" data-project="tabakalera">Work in progress...</a></li>
+                </ul>
+            </div>
+        </aside>
+
+        <section id="content-area" class="content-area hidden">
+            <div id="project-content" class="project-content">
                 <!-- Content will be injected here -->
             </div>
-        </div>
-    </div>
+        </section>
+    </main>
 
     <!-- Hidden content templates -->
     <div id="content-tabakalera" class="hidden-content" style="display: none;">
@@ -68,22 +87,6 @@
         </div>
     </div>
 
-    <div class="wip-container">
-        <i class="fas fa-triangle-exclamation"></i>
-        <span>Portfolio Work in Progress</span>
-    </div>
-
-    <div class="social-icons">
-        <a href="https://www.linkedin.com/in/alejandroreymunoz" target="_blank" class="social-icon"><i class="fab fa-linkedin"></i></a>
-        <a href="https://twitter.com/aleremu" target="_blank" class="social-icon"><i class="fab fa-x-twitter"></i></a>
-    </div>
-    
-    <div id="loading-screen">
-        <div class="spinner"></div>
-        <p class="loading-text">Loading</p>
-    </div>
-
-    <canvas id="unity-canvas" width=960 height=600 tabindex="-1" style="background: #181818;"></canvas>
     <script src="Build/Web.loader.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.4/js/lightbox.min.js"></script>
