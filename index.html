@@ -4,11 +4,11 @@
     <meta charset="utf-8">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <title>Unity Web Player | Aleremu Portfolio</title>
-    <link rel="icon" type="image/x-icon" href="assets/images/favicon.ico">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Pixelify+Sans:wght@400..700&display=block" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.4/css/lightbox.min.css">
     <style>
         /* Critical CSS to prevent FOUC (Flash of Unstyled Content) and white flash */
         body { background-color: #181818; margin: 0; overflow: hidden; font-family: sans-serif; }
@@ -19,6 +19,60 @@
   </head>
   <body>
     <div id="clock" class="clock">00:00:00</div>
+    
+    <div class="projects-container">
+        <h3>My Projects</h3>
+        <ul class="project-list">
+            <li><a href="#" data-project="tabakalera">Tabakalera</a></li>
+            <li><a href="#" target="_blank">Project Beta</a></li>
+            <li><a href="#" target="_blank">Project Gamma</a></li>
+        </ul>
+    </div>
+
+    <div id="project-overlay" class="project-overlay hidden">
+        <div class="overlay-backdrop"></div>
+        <div class="overlay-content-wrapper">
+            <div id="overlay-body">
+                <!-- Content will be injected here -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Hidden content templates -->
+    <div id="content-tabakalera" class="hidden-content" style="display: none;">
+        <div class="project-detail">
+            <div class="project-header">
+                <h2>Tabakalera</h2>
+            </div>
+            
+            <div class="content-block ar-section-01">
+                <div class="sphere-left-01"><img src="assets/images/tabakalera/ball_1_byn.svg" alt="sphere-01"></div>
+                <div class="sphere-left-02"><img src="assets/images/tabakalera/ball_2_byn.svg" alt="sphere-02"></div>
+                <div class="sphere-bottom-01"><img src="assets/images/tabakalera/ball_3_byn.svg" alt="sphere-03"></div>
+                <div class="sphere-bottom-02"><img src="assets/images/tabakalera/ball_4_byn.svg" alt="sphere-04"></div>
+                
+                <img id="art-exp-01" class="art-exp-img show content-image no-round left" src="assets/images/tabakalera/ar-01.svg" alt="Tabakaleras AR Experiece 1 Image">
+                <p>Responsible for carrying out the technical implementation of the <a href="https://ar.t.eus/" target="_blank">4 AR experiences</a> for Tabakalera's 2024 art campaign using Unity for WebGL.</p>
+            </div>
+
+            <div class="youtube-video">
+                <iframe width="100%" height="478px" src="https://www.youtube-nocookie.com/embed/GuPbDHCeujU?si=oKFW92X4cTtuRHCI" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+            </div>
+
+            <div class="gallery tabakalera">
+                <a href="assets/images/tabakalera/thumb01.webp" data-lightbox="tabakaleragallery"><img src="assets/images/tabakalera/thumb01.webp" alt="Tabakalera Image 1"> </a>
+                <a href="assets/images/tabakalera/thumb02.webp" data-lightbox="tabakaleragallery"><img src="assets/images/tabakalera/thumb02.webp" alt="Tabakalera Image 2"> </a>
+                <a href="assets/images/tabakalera/thumb03.webp" data-lightbox="tabakaleragallery"><img src="assets/images/tabakalera/thumb03.webp" alt="Tabakalera Image 3"> </a>
+                <a href="assets/images/tabakalera/thumb04.webp" data-lightbox="tabakaleragallery"><img src="assets/images/tabakalera/thumb04.webp" alt="Tabakalera Image 4"></a>
+            </div>
+        </div>
+    </div>
+
+    <div class="wip-container">
+        <i class="fas fa-triangle-exclamation"></i>
+        <span>Portfolio Work in Progress</span>
+    </div>
+
     <div class="social-icons">
         <a href="https://www.linkedin.com/in/alejandroreymunoz" target="_blank" class="social-icon"><i class="fab fa-linkedin"></i></a>
         <a href="https://twitter.com/aleremu" target="_blank" class="social-icon"><i class="fab fa-x-twitter"></i></a>
@@ -31,6 +85,8 @@
 
     <canvas id="unity-canvas" width=960 height=600 tabindex="-1" style="background: #181818;"></canvas>
     <script src="Build/Web.loader.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.4/js/lightbox.min.js"></script>
     <script src="js/main.js"></script>
   </body>
 </html>

@@ -54,4 +54,47 @@ document.addEventListener("DOMContentLoaded", function() {
     }).catch((message) => {
         alert(message);
     });
+
+    // Project Overlay Logic
+    const overlay = document.getElementById('project-overlay');
+    const overlayBody = document.getElementById('overlay-body');
+    const backdrop = document.querySelector('.overlay-backdrop');
+    const projectLinks = document.querySelectorAll('a[data-project]');
+
+    function openOverlay(projectId) {
+        const contentTemplate = document.getElementById('content-' + projectId);
+        if (contentTemplate) {
+            overlayBody.innerHTML = contentTemplate.innerHTML;
+            overlay.classList.remove('hidden');
+        } else {
+            console.error('Content not found for project:', projectId);
+        }
+    }
+
+    function closeOverlay() {
+        overlay.classList.add('hidden');
+        // Optional: Clear content after transition to stop videos etc.
+        setTimeout(() => {
+            overlayBody.innerHTML = '';
+        }, 300);
+    }
+
+    projectLinks.forEach(link => {
+        link.addEventListener('click', function(e) {
+            e.preventDefault();
+            const projectId = this.getAttribute('data-project');
+            openOverlay(projectId);
+        });
+    });
+
+    if (backdrop) {
+        backdrop.addEventListener('click', closeOverlay);
+    }
+
+    // Close on Escape key
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape' && !overlay.classList.contains('hidden')) {
+            closeOverlay();
+        }
+    });
 });
