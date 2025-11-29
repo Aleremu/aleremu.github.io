@@ -61,12 +61,65 @@ document.addEventListener("DOMContentLoaded", function() {
     const globalBackdrop = document.getElementById('global-backdrop');
     const projectLinks = document.querySelectorAll('a[data-project]');
 
+    // Fix for Lightbox gallery duplication:
+    // Rename data-lightbox in hidden templates so they are not picked up by Lightbox
+    document.querySelectorAll('.hidden-content a[data-lightbox]').forEach(link => {
+        link.setAttribute('data-lightbox-safe', link.getAttribute('data-lightbox'));
+        link.removeAttribute('data-lightbox');
+    });
+
     function openProject(projectId) {
         const contentTemplate = document.getElementById('content-' + projectId);
         if (contentTemplate) {
             projectContent.innerHTML = contentTemplate.innerHTML;
+
+            // Restore data-lightbox attribute for the active content
+            projectContent.querySelectorAll('a[data-lightbox-safe]').forEach(link => {
+                link.setAttribute('data-lightbox', link.getAttribute('data-lightbox-safe'));
+                link.removeAttribute('data-lightbox-safe');
+            });
+
             contentArea.classList.remove('hidden');
             if (globalBackdrop) globalBackdrop.classList.remove('hidden');
+            
+            // GSAP Animations
+            if (typeof gsap !== 'undefined') {
+                // Kill any existing tweens on the content to prevent conflicts
+                gsap.killTweensOf("#project-content *");
+
+                // Animate header
+                gsap.from(projectContent.querySelectorAll(".project-header"), {
+                    y: -30,
+                    opacity: 0,
+                    duration: 0.5,
+                    ease: "power2.out",
+                    clearProps: "all"
+                });
+
+                // Animate content blocks and other elements with stagger
+                gsap.from(projectContent.querySelectorAll(".content-block, .youtube-video, .gallery"), {
+                    y: 30,
+                    opacity: 0,
+                    duration: 0.5,
+                    stagger: 0.1,
+                    ease: "power2.out",
+                    delay: 0.1,
+                    clearProps: "all"
+                });
+                
+                // Animate gallery images specifically if needed, or let the gallery block animation handle it
+                // But let's add a nice pop effect for images inside gallery
+                gsap.from(projectContent.querySelectorAll(".gallery img"), {
+                    scale: 0.8,
+                    opacity: 0,
+                    duration: 0.4,
+                    stagger: 0.05,
+                    ease: "back.out(1.7)",
+                    delay: 0.3,
+                    clearProps: "all"
+                });
+            }
+
             // Initialize lightbox if needed (it usually auto-inits on DOM change or click)
         } else {
             console.error('Content not found for project:', projectId);

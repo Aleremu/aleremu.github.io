@@ -176,7 +176,7 @@ body {
     flex: 0 0 300px; /* Fixed width or percentage */
     display: flex;
     flex-direction: column;
-    min-width: 315px;
+    min-width: 425px;
     padding: 40px;
     box-sizing: border-box;
     pointer-events: auto;
@@ -185,7 +185,7 @@ body {
 }
 
 .clock {
-    font-size: 60px;
+    font-size: 94px;
     margin-bottom: 40px;
     line-height: 1;
     text-shadow: 2px 2px 0px #000000;
@@ -267,8 +267,8 @@ body {
     /* Custom Scrollbar */
     scrollbar-width: thin;
     scrollbar-color: #555 #222;
-    overflow-y: visible;
     overflow: scroll;
+    overflow-x: visible;
 }
 
 .project-content::-webkit-scrollbar {
@@ -382,6 +382,11 @@ body {
     cursor: pointer;
 }
 
+.gallery a {
+    text-decoration: none !important;
+    border-bottom: none !important;
+}
+
 .gallery img:hover {
     transform: scale(1.05);
     z-index: 10;
@@ -484,7 +489,7 @@ body {
         flex: 0 0 auto;
         width: 100%;
         padding: 20px;
-        padding-top: 80px; /* Space for social icons */
+        padding-top: 30px; /* Space for social icons */
         flex-direction: column;
         justify-content: flex-start;
         align-items: center;
@@ -493,8 +498,8 @@ body {
     }
 
     .clock {
-        font-size: 60px;
-        margin-bottom: 20px;
+        font-size: 70px;
+        margin-bottom: 0px;
     }
 
     .projects-container {
@@ -504,7 +509,7 @@ body {
     
     .projects-container h3 {
         display: inline-block;
-        margin-bottom: 15px;
+        /* margin-bottom: 15px; */
     }
 
     .project-list {
@@ -552,12 +557,12 @@ body {
         flex-direction: column;
         align-items: center;
         text-align: center;
-        padding-top: 60px;
+        padding-top: 30px;
     }
 
     .projects-container {
         text-align: center;
-        margin-top: 20px;
+        /* margin-top: 20px; */
     }
 
     .project-list {
@@ -565,6 +570,21 @@ body {
     }
     
     .clock {
-        font-size: 32px;
+        font-size: 48px;
     }
+}
+.project-links {
+    display: flex;
+    gap: 10px;
+}
+
+.icon-link {
+    width: 30px;
+    height: 30px;
+    transition: transform 0.2s;
+    filter: brightness(0) invert(1);
+}
+
+.icon-link:hover {
+    transform: scale(1.1);
 }
