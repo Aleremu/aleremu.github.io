@@ -61,22 +61,23 @@ document.addEventListener("DOMContentLoaded", function() {
     const globalBackdrop = document.getElementById('global-backdrop');
     const projectLinks = document.querySelectorAll('a[data-project]');
 
-    // Fix for Lightbox gallery duplication:
-    // Rename data-lightbox in hidden templates so they are not picked up by Lightbox
-    document.querySelectorAll('.hidden-content a[data-lightbox]').forEach(link => {
-        link.setAttribute('data-lightbox-safe', link.getAttribute('data-lightbox'));
-        link.removeAttribute('data-lightbox');
-    });
-
     function openProject(projectId) {
         const contentTemplate = document.getElementById('content-' + projectId);
         if (contentTemplate) {
             projectContent.innerHTML = contentTemplate.innerHTML;
 
-            // Restore data-lightbox attribute for the active content
-            projectContent.querySelectorAll('a[data-lightbox-safe]').forEach(link => {
-                link.setAttribute('data-lightbox', link.getAttribute('data-lightbox-safe'));
-                link.removeAttribute('data-lightbox-safe');
+            // Convert data-lightbox to GLightbox format
+            projectContent.querySelectorAll('a[data-lightbox]').forEach(link => {
+                link.classList.add('glightbox');
+                link.setAttribute('data-gallery', link.getAttribute('data-lightbox'));
+            });
+
+            // Initialize GLightbox
+            const lightbox = GLightbox({
+                selector: '.glightbox',
+                touchNavigation: true,
+                loop: true,
+                autoplayVideos: true
             });
 
             contentArea.classList.remove('hidden');
