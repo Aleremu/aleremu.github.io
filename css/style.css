@@ -192,7 +192,20 @@ body {
     margin-bottom: 40px;
     line-height: 1;
     text-shadow: 2px 2px 0px #000000;
-    pointer-events: none; /* Don't block Unity canvas */
+    pointer-events: auto; /* Enable clicks for hour advance */
+    cursor: pointer;
+    transition: transform 0.1s ease-out, text-shadow 0.1s ease-out;
+    user-select: none;
+}
+
+.clock:hover {
+    /* text-shadow: 2px 2px 0px #000000, 0 0 10px rgba(255, 255, 255, 0.3); */
+}
+
+.clock:active,
+.clock.clock-clicked {
+    transform: scale(0.95);
+    /* text-shadow: 2px 2px 0px #000000, 0 0 20px rgba(255, 255, 255, 0.6); */
 }
 
 .projects-container {

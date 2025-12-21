@@ -14,19 +14,7 @@ document.addEventListener("DOMContentLoaded", function() {
         document.body.style.textAlign = "left";
     }
 
-    function updateClock() {
-        var now = new Date();
-        var hours = String(now.getHours()).padStart(2, '0');
-        var minutes = String(now.getMinutes()).padStart(2, '0');
-        var seconds = String(now.getSeconds()).padStart(2, '0');
-        var clockElement = document.getElementById('clock');
-        if (clockElement) {
-            clockElement.textContent = hours + ":" + minutes + ":" + seconds;
-        }
-    }
-    
-    setInterval(updateClock, 1000);
-    updateClock();
+    // Note: Clock is now managed by webClock.js (WebClockManager)
 
     var loadingScreen = document.querySelector("#loading-screen");
     var minLoadTimePromise = new Promise((resolve) => {
@@ -44,6 +32,10 @@ document.addEventListener("DOMContentLoaded", function() {
         productVersion: "1.0",
         // matchWebGLToCanvasSize: false, // Uncomment this to separately control WebGL canvas render size and DOM element size.
         // devicePixelRatio: 1, // Uncomment this to override low DPI rendering on high DPI displays.
+    }).then(function(instance) {
+        // Store Unity instance globally for WebClockBridge communication
+        window.unityInstance = instance;
+        return instance;
     });
 
     Promise.all([minLoadTimePromise, unityInstancePromise]).then(() => {
