@@ -1,4 +1,4 @@
-document.addEventListener("DOMContentLoaded", function() {
+document.addEventListener("DOMContentLoaded", function () {
     if (/iPhone|iPad|iPod|Android/i.test(navigator.userAgent)) {
         // Mobile device style: fill the whole browser client area with the game canvas:
         var meta = document.createElement('meta');
@@ -32,7 +32,7 @@ document.addEventListener("DOMContentLoaded", function() {
         productVersion: "1.0",
         // matchWebGLToCanvasSize: false, // Uncomment this to separately control WebGL canvas render size and DOM element size.
         // devicePixelRatio: 1, // Uncomment this to override low DPI rendering on high DPI displays.
-    }).then(function(instance) {
+    }).then(function (instance) {
         // Store Unity instance globally for WebClockBridge communication
         window.unityInstance = instance;
         return instance;
@@ -74,7 +74,8 @@ document.addEventListener("DOMContentLoaded", function() {
 
             contentArea.classList.remove('hidden');
             if (globalBackdrop) globalBackdrop.classList.remove('hidden');
-            
+            document.body.classList.add('modal-open');
+
             // GSAP Animations
             if (typeof gsap !== 'undefined') {
                 // Kill any existing tweens on the content to prevent conflicts
@@ -99,7 +100,7 @@ document.addEventListener("DOMContentLoaded", function() {
                     delay: 0.1,
                     clearProps: "all"
                 });
-                
+
                 // Animate gallery images specifically if needed, or let the gallery block animation handle it
                 // But let's add a nice pop effect for images inside gallery
                 gsap.from(projectContent.querySelectorAll(".gallery img"), {
@@ -122,19 +123,20 @@ document.addEventListener("DOMContentLoaded", function() {
     function closeProject() {
         contentArea.classList.add('hidden');
         if (globalBackdrop) globalBackdrop.classList.add('hidden');
+        document.body.classList.remove('modal-open');
         setTimeout(() => {
             projectContent.innerHTML = '';
         }, 300);
-        
+
         // Remove active class from all links
         projectLinks.forEach(l => l.classList.remove('active'));
     }
 
     projectLinks.forEach(link => {
-        link.addEventListener('click', function(e) {
+        link.addEventListener('click', function (e) {
             e.preventDefault();
             const projectId = this.getAttribute('data-project');
-            
+
             if (this.classList.contains('active')) {
                 // If already active, close it
                 closeProject();
@@ -150,8 +152,13 @@ document.addEventListener("DOMContentLoaded", function() {
         });
     });
 
+    const closeBtn = document.getElementById('close-project');
+    if (closeBtn) {
+        closeBtn.addEventListener('click', closeProject);
+    }
+
     // Close on Escape key
-    document.addEventListener('keydown', function(e) {
+    document.addEventListener('keydown', function (e) {
         if (e.key === 'Escape' && !contentArea.classList.contains('hidden')) {
             closeProject();
         }
